@@ -4,6 +4,8 @@ Radial Menu is a wrapper for making easelly radial menu.
 
 ![Capture](./Capture.PNG)
 
+[JSFiddle Sample](https://jsfiddle.net/L80pg3rd/1/)
+
 ```js
 const config = [
     {
