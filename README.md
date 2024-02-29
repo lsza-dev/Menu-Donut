@@ -1,6 +1,8 @@
 # Radial Menu
 
-Radial Menu is a wrapper for making easelly radial menu.
+Radial Menu is a wrapper for making easelly radial menu. This menu will be opened by a right mouse click or a long touch on screen.
+
+To select an item, release the right button or the finger on the button to select it.
 
 ![Capture](./Capture.PNG)
 
@@ -45,6 +47,7 @@ const radial = new RadialMenu(config);
 
 - [x] Create HTML, CSS for menu
 - [x] Create Class for creating new radial menu with simple config
+- [ ] Make touch screen compatible
 - [ ] Limit the minimal and maximal button due to the CSS limitation
 - [ ] Create submenu
 - [ ] Make possible to add/remove button on the way

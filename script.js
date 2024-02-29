@@ -27,6 +27,6 @@ const config = {
             label:"😆<br>button 8"
         }
     ],
-    onSelect:function(index) { console.log(index) }
+    onSelect:function(index) { alert(`Bouton ${index + 1} sélectionné`) }
 };
 const radial = new RadialMenu(config);
