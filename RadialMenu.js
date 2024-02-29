@@ -29,22 +29,30 @@ class RadialMenu {
             radialContainer.classList.add("radial-menu-container");
             //Generate and save the element
             const radialMenu = document.createElement("ul");
+            radialMenu.style.width = this.config.width || "384px";
+            radialMenu.style["font-size"] = this.config.fontSize || "16px";
             //Add class to the radial menu
             radialMenu.classList.add("radial-menu");
             radialContainer.appendChild(radialMenu);
-            //Generate buttons list
-            let li = "";
-            for(let section of radialButtons) {
-                li += `
-                    <li>
-                        <div ${section.disabled ? "radial-menu-disabled=true" : ""} class="radial-menu-button">
-                            <div>${section.label}</div>
-                        </div>
-                    </li>
-                `;
+            if(radialButtons.length < 3) {
+                radialButtons.push({
+                    label:"",
+                    disabled:true
+                })
             }
-            //Append list to the radial menu
-            radialMenu.innerHTML = li;
+            //Generate buttons list
+            for(let section of radialButtons) {
+                const li = document.createElement("li");
+                const button = document.createElement("div");
+                button.classList.add("radial-menu-button");
+                if(section.disabled || section.hidden)
+                    button.setAttribute("radial-menu-disabled", true);
+                if(section.hidden)
+                    li.classList.add("radial-menu-hidden");
+                button.innerHTML = `<div>${section.label}</div>`;
+                li.append(button);
+                radialMenu.append(li);
+            }
             //Define for each buttons, the style and config
             //Get buttons
             const sections = radialMenu.querySelectorAll("li");
@@ -52,15 +60,16 @@ class RadialMenu {
             const sectionsCount = Array.from(sections).length;
             const sectionStep = 360 / sectionsCount;
             const buttonRotation = sectionStep / 2 + (90 - sectionStep);
+            const skew = 90 - sectionStep;
             let rotation = 0;
             let labelRotation = buttonRotation;
             for(let section of sections) {
                 //Set rotation and skew to section
-                section.style.transform = `rotate(${rotation}deg) skew(${90 - sectionStep}deg)`;
+                section.style.transform = `rotate(${rotation}deg) skew(${skew}deg)`;
                 rotation += sectionStep;
                 //Center, unskew and unrotate the button
                 const button = section.firstElementChild;
-                button.style.transform = `translate(-50%,-50%) skew(-${90 - sectionStep}deg) rotate(-${buttonRotation}deg)`;
+                button.style.transform = `translate(-50%,-50%) skew(${skew * -1}deg) rotate(-${buttonRotation}deg)`;
                 //Unrotate label to be horizontal
                 const label = button.firstElementChild;
                 label.style.transform = `rotate(${labelRotation}deg)`;

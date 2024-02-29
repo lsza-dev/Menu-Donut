@@ -17,7 +17,7 @@
     aspect-ratio: 1;
     top:50%;
     left:50%;
-    transform: translate(-50%,-50%) translateZ(0);
+    transform: translate(-50%,-50%);
 
     /* animation */
     opacity:0;
@@ -34,6 +34,10 @@
     aspect-ratio: 1;
     z-index: 1;
     border-radius: 50%;
+    background: url(./logo.png);
+    background-position: center;
+    background-size: 75%;
+    background-repeat: no-repeat;
 }
 .radial-menu li{
     /* background-color: tomato; */
@@ -45,11 +49,19 @@
     height:100%;
     transform-origin: 100% 100%;
     overflow:hidden;
-    filter:drop-shadow(0 0 1px lightgray);
+    /*filter:drop-shadow(0 0 1px lightgray);*/
     user-select: none;
 }
 .radial-menu li > div{
-    background: radial-gradient(transparent 0%, transparent 20%, white 20%, white);
+    background: radial-gradient(
+        transparent 0%,
+        transparent calc(20% - 5px),
+        rgba(0,0,0,0.1) 20%,
+        white 20%,
+        white 70%,
+        rgba(0,0,0,0.1) calc(70% - 2px),
+        transparent
+    );
     color:grey;
     display:block;
     position:absolute;
@@ -63,25 +75,44 @@
     transform: translate(-50%,-50%) skew(-45deg) rotate(-67.5deg);
     overflow: hidden;
     transform-origin: 50% 50%;
-    border: 1px solid lightgray;
+    /*border: 1px solid lightgray;*/
+}
+.radial-menu li.radial-menu-hidden {
+    display:none;
 }
 .radial-menu li > div[radial-menu-disabled]{
-    background: radial-gradient(transparent 0%, transparent 20%, lightgrey 20%, lightgrey);
+    background: radial-gradient(
+        transparent 0%,
+        transparent calc(20% - 5px),
+        rgba(0,0,0,0.1) 20%,
+        lightgray 20%,
+        lightgrey 70%,
+        rgba(0,0,0,0.1) calc(70% - 2px),
+        transparent
+    );
     filter: grayscale(1);
 }
 .radial-menu li > div:hover:not([radial-menu-disabled]),
 .radial-menu li > div.radial-menu-button-hover:not([radial-menu-disabled])
 {
-    background: radial-gradient(transparent 0%, transparent 20%, whitesmoke 20%, whitesmoke);
+    background: radial-gradient(
+        transparent 0%,
+        transparent calc(20% - 5px),
+        rgba(0,0,0,0.1) 20%,
+        whitesmoke 20%,
+        whitesmoke 70%,
+        rgba(0,0,0,0.1) calc(70% - 2px),
+        transparent
+    );
     cursor:pointer;
-    width: 105%;
+    /*width: 105%;*/
 }
 
 .radial-menu li > div > div{
     position: absolute;
     width: 100%;
     height: 100%;
-    top:-35%;
+    top: -33.33%;
     display: flex;
     justify-content: center;
     align-content: center;

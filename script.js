@@ -1,32 +1,34 @@
 const config = {
     parent:document.body,
+    width:"384px",
+    fontSize:"16px",
     buttons: [
         {
-            label:"😀<br>button 1",
+            label:"☎<br>Button 1",
             disabled:true
         },
         {
-            label:"😁<br>button 2"
+            label:"♬<br>Button 2"
         },
         {
-            label:"😂<br>button 3"
+            label:"✉<br>Button 3"
         },
         {
-            label:"🤣<br>button 4"
+            label:"✿<br>Button 4"
         },
         {
-            label:"😃<br>button 5"
+            label:"❤<br>Button 5"
         },
         {
-            label:"😄<br>button 6"
+            label:"★<br>Button 6"
         },
         {
-            label:"😅<br>button 7"
+            label:"☢<br>Button 7"
         },
         {
-            label:"😆<br>button 8"
+            label:"☯<br>Button 8"
         }
     ],
-    onSelect:function(index) { alert(`Bouton ${index + 1} sélectionné`) }
+    onSelect:function(index) { alert(`Bouton ${this.buttons[index].label} sélectionné`) }
 };
 const radial = new RadialMenu(config);
