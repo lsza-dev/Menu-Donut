@@ -7,40 +7,45 @@ Radial Menu is a wrapper for making easelly radial menu.
 [JSFiddle Sample](https://jsfiddle.net/L80pg3rd/1/)
 
 ```js
-const config = [
-    {
-        label:"😀 button 1",
-        onClick:() => {}
-    }
-    {,
-        label:"😁 button 2",
-        onClick:() => {}
-    },
-    {
-        label:"😂 button 3",
-        onClick:() => {}
-    },
-    {
-        label:"🤣 button 4",
-        onClick:() => {}
-    },
-    {
-        label:"😃 button 5",
-        onClick:() => {}
-    },
-    {
-        label:"😄 button 6",
-        onClick:() => {}
-    },
-    {
-        label:"😅 button 7",
-        onClick:() => {}
-    },
-    {
-        label:"😆 button 8",
-        onClick:() => {}
-    }
-];
+const config = {
+    buttons: [
+        {
+            label:"😀<br>button 1",
+            disabled:true
+        }
+        {,
+            label:"😁<br>button 2"
+        },
+        {
+            label:"😂<br>button 3"
+        },
+        {
+            label:"🤣<br>button 4"
+        },
+        {
+            label:"😃<br>button 5"
+        },
+        {
+            label:"😄<br>button 6"
+        },
+        {
+            label:"😅<br>button 7"
+        },
+        {
+            label:"😆<br>button 8"
+        }
+    ],
+    onSelect:function(index) { console.log(`Button ${index} selected`)}
+};
 
 const radial = new RadialMenu(config);
 ```
+
+# TODO
+
+- [x] Create HTML, CSS for menu
+- [x] Create Class for creating new radial menu with simple config
+- [ ] Limit the minimal and maximal button due to the CSS limitation
+- [ ] Create submenu
+- [ ] Make possible to add/remove button on the way
+- [ ] Animate the menu at open
