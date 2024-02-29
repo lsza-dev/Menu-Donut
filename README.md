@@ -10,35 +10,35 @@ Radial Menu is a wrapper for making easelly radial menu.
 const config = [
     {
         label:"😀 button 1",
-        function:() => {}
+        onClick:() => {}
     }
     {,
         label:"😁 button 2",
-        function:() => {}
+        onClick:() => {}
     },
     {
         label:"😂 button 3",
-        function:() => {}
+        onClick:() => {}
     },
     {
         label:"🤣 button 4",
-        function:() => {}
+        onClick:() => {}
     },
     {
         label:"😃 button 5",
-        function:() => {}
+        onClick:() => {}
     },
     {
         label:"😄 button 6",
-        function:() => {}
+        onClick:() => {}
     },
     {
         label:"😅 button 7",
-        function:() => {}
+        onClick:() => {}
     },
     {
         label:"😆 button 8",
-        function:() => {}
+        onClick:() => {}
     }
 ];
 

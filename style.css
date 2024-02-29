@@ -1,11 +1,15 @@
-html {
-    background: whitesmoke;
+.radial-menu-container {
+    position:fixed;
+    display:none;
+    top:0;
+    left:0;
+    height:100vh;
+    width:100vw;
 }
-
-.menu-donut {
+.radial-menu {
+    position:fixed;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size:12px;
-    position:fixed;
     /* background:lightgreen; */
     list-style:none;
     padding:0;
@@ -14,8 +18,12 @@ html {
     top:50%;
     left:50%;
     transform: translate(-50%,-50%) translateZ(0);
+
+    /* animation */
+    opacity:0;
+    transition:opacity 1s ease;
 }
-.menu-donut:before {
+.radial-menu:before {
     content:'';
     /*border:1px solid lightgray;*/
     position:absolute;
@@ -27,7 +35,7 @@ html {
     z-index: 1;
     border-radius: 50%;
 }
-.menu-donut li{
+.radial-menu li{
     /* background-color: tomato; */
     display:block;
     position:absolute;
@@ -38,8 +46,9 @@ html {
     transform-origin: 100% 100%;
     overflow:hidden;
     filter:drop-shadow(0 0 1px lightgray);
+    user-select: none;
 }
-.menu-donut li > a{
+.radial-menu li > div{
     background: radial-gradient(transparent 0%, transparent 20%, white 20%, white);
     color:grey;
     display:block;
@@ -47,7 +56,7 @@ html {
     text-align:center;
     top: 100%;
     left: 100%;
-    width: 200%;
+    width: 195%;
     aspect-ratio: 1;
     border-radius:50%;
     text-decoration: none;
@@ -56,11 +65,16 @@ html {
     transform-origin: 50% 50%;
     border: 1px solid lightgray;
 }
-.menu-donut li > a:hover{
+.radial-menu li > div[radial-menu-disabled]{
+    background: radial-gradient(transparent 0%, transparent 20%, lightgrey 20%, lightgrey);
+    filter: grayscale(1);
+}
+.radial-menu li > div:hover:not([radial-menu-disabled]){
     background: radial-gradient(transparent 0%, transparent 20%, whitesmoke 20%, whitesmoke);
+    cursor:pointer;
 }
 
-.menu-donut li > a > div{
+.radial-menu li > div > div{
     position: absolute;
     width: 100%;
     height: 100%;
@@ -71,66 +85,66 @@ html {
     align-items: center;
 }
 
-.menu-donut li:nth-child(1){
+.radial-menu li:nth-child(1){
     transform:skew(45deg);
 }
-.menu-donut li:nth-child(2){
+.radial-menu li:nth-child(2){
     transform:
         rotate(45deg)
         skew(45deg);
 }
-.menu-donut li:nth-child(3){
+.radial-menu li:nth-child(3){
     transform:
         rotate(90deg)
         skew(45deg);
 }
-.menu-donut li:nth-child(4){
+.radial-menu li:nth-child(4){
     transform:
         rotate(135deg)
         skew(45deg);
 }
-.menu-donut li:nth-child(5){
+.radial-menu li:nth-child(5){
     transform:
         rotate(180deg)
         skew(45deg);
 }
-.menu-donut li:nth-child(6){
+.radial-menu li:nth-child(6){
     transform:
         rotate(225deg)
         skew(45deg);
 }
-.menu-donut li:nth-child(7){
+.radial-menu li:nth-child(7){
     transform:
         rotate(270deg)
         skew(45deg);
 }
-.menu-donut li:nth-child(8){
+.radial-menu li:nth-child(8){
     transform:
         rotate(315deg)
         skew(45deg);
 }
 
-.menu-donut li:nth-child(1) > a > div{
+.radial-menu li:nth-child(1) > a > div{
     transform: rotate(67.5deg);
 }
-.menu-donut li:nth-child(2) > a > div{
+.radial-menu li:nth-child(2) > a > div{
     transform: rotate(22.5deg);
 }
-.menu-donut li:nth-child(3) > a > div{
+.radial-menu li:nth-child(3) > a > div{
     transform: rotate(-22.5deg);
 }
-.menu-donut li:nth-child(4) > a > div{
+.radial-menu li:nth-child(4) > a > div{
     transform: rotate(-67.5deg);
 }
-.menu-donut li:nth-child(5) > a > div{
+.radial-menu li:nth-child(5) > a > div{
     transform: rotate(-112.5deg);
 }
-.menu-donut li:nth-child(6) > a > div{
+.radial-menu li:nth-child(6) > a > div{
     transform: rotate(-157.5deg);
 }
-.menu-donut li:nth-child(7) > a > div{
+.radial-menu li:nth-child(7) > a > div{
     transform: rotate(-202.5deg);
 }
-.menu-donut li:nth-child(8) > a > div{
+.radial-menu li:nth-child(8) > a > div{
     transform: rotate(-247.5deg);
 }
