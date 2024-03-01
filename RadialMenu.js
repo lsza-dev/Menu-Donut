@@ -1,15 +1,19 @@
 class RadialMenu {
+    config = {};
+
     /**
      * Create a new radial menu
-     * @param {Array<Object>} config An array with all buttons config
+     * @param {object} config An object represent the configuration
+     * @prop {array<Object>} config.buttons An array with all buttons config
      */
     constructor(config) {
         try {
             //Set config and initialize radial menu
             this.config = config;
+            this.config.buttons = config.buttons.map(el => new RadialMenuButton(el, this));
             //Define prop to detect when the menu is open or close
             this.isOpen = false;
-            this.radialContainer = this.generateRadialMenu(this.config.buttons);
+            this.radialContainer = this.generateRadialMenu(this.buttons);
             this.radialMenu = this.radialContainer.firstChild;
             this.events();
         }
@@ -19,21 +23,44 @@ class RadialMenu {
         }
     }
 
+    get buttons() {
+        return this.config.buttons;
+    }
+    /**
+     * @param {any} buttons
+     */
+    set buttons(buttons) {
+        try {
+            this.config.buttons = buttons.map(el => new RadialMenuButton(el, this));
+            this.generateRadialMenu();
+        } catch(e) {
+            throw new Error("Unable to regenerate the radial menu:", e);
+        }
+    }
+
     /**
      * Generate the radial menu
      */
-    generateRadialMenu(radialButtons) {
+    generateRadialMenu() {
         try {
-            //Generate container
-            const radialContainer = document.createElement("div");
-            radialContainer.classList.add("radial-menu-container");
-            //Generate and save the element
-            const radialMenu = document.createElement("ul");
-            radialMenu.style.width = this.config.width || "384px";
-            radialMenu.style["font-size"] = this.config.fontSize || "16px";
-            //Add class to the radial menu
-            radialMenu.classList.add("radial-menu");
-            radialContainer.appendChild(radialMenu);
+            let radialMenu, radialContainer;
+            const radialButtons = this.config.buttons;
+            if(!this.radialContainer) { //First initialization
+                //Generate container
+                radialContainer = document.createElement("div");
+                radialContainer.classList.add("radial-menu-container");
+                //Generate and save the element
+                radialMenu = document.createElement("ul");
+                radialMenu.style.width = this.config.width || "384px";
+                radialMenu.style["font-size"] = this.config.fontSize || "16px";
+                //Add class to the radial menu
+                radialMenu.classList.add("radial-menu");
+                radialContainer.appendChild(radialMenu);
+            } else { //Use existing radial menu
+                radialContainer = this.radialContainer;
+                radialMenu = this.radialMenu;
+                radialMenu.innerHTML = ""; //Empty the radial menu for regenerating
+            }
             if(radialButtons.length < 3) {
                 radialButtons.push({
                     label:"",
@@ -86,21 +113,23 @@ class RadialMenu {
 
     events() {
         try {
-            // Define events for buttons
-            this.radialMenu.querySelectorAll("li").forEach(section => {
-                section.firstElementChild.addEventListener("mouseup", function(e) {
-                    if(this.getAttribute("radial-menu-disabled")) return;
-                    let button = this.closest(".radial-menu-button");
-                    selectedButtonHandler(this);
-                });
-                const selectedButtonHandler = btn => this.selectedButton(btn);
-            });
-
-            //Define events for container
-            let parent,touchTimeout,touchButton,cursorPosX,cursorPosY;
+            let parent, //The container
+                touchTimeout, //Save the id of the timeout handling the touch screen
+                touchHoverButton, //Use for save the button when user release the touch screen
+                cursorPosX, //For the position X of cursor or touch
+                cursorPosY; //For the position Y of cursor or touch
             //Check if parent has been defined in the configuration or use body
             if(this.config.parent) parent = this.config.parent;
             else parent = document.body;
+
+            this.radialMenu.addEventListener("mouseup", (e) => {
+                const button = e.target.closest(".radial-menu-button")
+                if(!button) return;
+                if(button.getAttribute("radial-menu-disabled")) return;
+                this.selectedButton(button)//selectedButtonHandler(button);
+            });
+
+            //Define events for container
             //Prevent contextmenu to open
             parent.addEventListener("contextmenu", (e) => e.preventDefault());
             //Add mouse events
@@ -122,13 +151,14 @@ class RadialMenu {
                 }
                 this.radialMenu.querySelectorAll(".radial-menu-button").forEach(el => el.classList.remove("radial-menu-button-hover"));
                 const target = document.elementFromPoint(cursorPosX, cursorPosY);
-                touchButton = target.closest(".radial-menu-button");
-                if(touchButton && !touchButton.getAttribute("radial-menu-disabled")) touchButton.classList.add("radial-menu-button-hover");
-                else touchButton = null;
+                touchHoverButton = target.closest(".radial-menu-button");
+                if(touchHoverButton && !touchHoverButton.getAttribute("radial-menu-disabled")) touchHoverButton.classList.add("radial-menu-button-hover");
+                else touchHoverButton = null;
             }, { passive: false }));
             parent.addEventListener("touchend", (e) => {
                 if(touchTimeout) clearTimeout(touchTimeout);
-                if(touchButton) this.selectedButton(touchButton);
+                if(touchHoverButton) this.selectedButton(touchHoverButton);
+                touchHoverButton = null;
                 this.onClose();
             });
             parent.addEventListener("touchstart", (e) => {
@@ -177,10 +207,73 @@ class RadialMenu {
         this.radialMenu.querySelectorAll(".radial-menu-button").forEach(el => el.classList.remove("radial-menu-button-hover"))
         this.radialMenu.style.opacity = "0";
     }
-
     selectedButton(button) {
         const section = button.parentElement;
         const index = Array.from(section.parentElement.children).indexOf(section);
-        this.config.onSelect(index);
+        const buttonFromConfig = this.config.buttons[index];
+        this.config.onSelect(index, buttonFromConfig.value || buttonFromConfig.label);
     }
+}
+
+class RadialMenuButton {
+    #label = "";
+    #disabled = false;
+    #hidden = false;
+    #value = null;
+    /**
+     * 
+     * @param {*} config 
+     * @param {RadialMenu} instance The radial menu instance
+     */
+    constructor(config, instance) {
+        this.#label = config.label;
+        this.#disabled = config.disabled || false;
+        this.#hidden = config.hidden || false;
+        this.#value = config.value || null;
+        this.instance = instance;
+    }
+
+    get label() {
+        return this.#label;
+    }
+    /**
+     * @param {string} label 
+     */
+    set label(label) {
+        this.#label = label;
+        this.instance.generateRadialMenu();
+    }
+
+    get disabled() {
+        return this.#disabled;
+    }
+    /**
+     * @param {boolean} disabled
+     */
+    set disabled(disabled) {
+        this.#disabled = disabled;
+        this.instance.generateRadialMenu();
+    }
+
+    get hidden() {
+        return this.#hidden;
+    }
+    /**
+     * @param {boolean} hidden
+     */
+    set hidden(hidden) {
+        this.#hidden = hidden;
+        this.instance.generateRadialMenu();
+    }
+
+    get value() {
+        return this.#value;
+    }
+    /**
+     * @param {boolean} value
+     */
+    set value(value) {
+        this.#value = value;
+    }
+
 }

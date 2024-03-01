@@ -49,6 +49,6 @@ const radial = new RadialMenu(config);
 - [x] Create Class for creating new radial menu with simple config
 - [x] Make touch screen compatible
 - [x] Limit the minimal buttons due to the CSS limitation (no maximal, you know what you do !)
+- [x] Make possible to add/remove button on the way
 - [ ] Create submenu
-- [ ] Make possible to add/remove button on the way
 - [ ] Animate the menu at open

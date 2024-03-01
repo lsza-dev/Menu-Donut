@@ -5,22 +5,28 @@ const config = {
     buttons: [
         {
             label:"☎<br>Button 1",
+            value:1,
             disabled:true
         },
         {
-            label:"♬<br>Button 2"
+            label:"♬<br>Button 2",
+            value:"music"
         },
         {
-            label:"✉<br>Button 3"
+            label:"✉<br>Button 3",
+            value:"letter"
         },
         {
-            label:"✿<br>Button 4"
+            label:"✿<br>Button 4",
+            value:"flower"
         },
         {
-            label:"❤<br>Button 5"
+            label:"❤<br>Button 5",
+            value:"<3"
         },
         {
-            label:"★<br>Button 6"
+            label:"★<br>Button 6",
+            value:10
         },
         {
             label:"☢<br>Button 7"
@@ -29,6 +35,6 @@ const config = {
             label:"☯<br>Button 8"
         }
     ],
-    onSelect:function(index) { alert(`Bouton ${this.buttons[index].label} sélectionné`) }
+    onSelect:function(index, value) { alert(`Bouton ${value}(${index}) sélectionné`) }
 };
 const radial = new RadialMenu(config);
