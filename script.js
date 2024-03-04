@@ -4,35 +4,107 @@ const config = {
     fontSize:"16px",
     buttons: [
         {
-            label:"☎<br>Button 1",
-            value:1,
-            disabled:true
+            label:"Gestionnaires",
+            buttons:[
+                {
+                    label:"Ingrédients",
+                },
+                {
+                    label:"Commentaires",
+                },
+                {
+                    label:"Allergènes",
+                },
+                {
+                    label:"Ressources",
+                },
+                {
+                    label:"Imprimantes",
+                },
+                {
+                    label:"Tableur"
+                }
+            ]
         },
         {
-            label:"♬<br>Button 2",
-            value:"music"
+            label:"Paramètres",
+            buttons:[
+                {
+                    label:"Mise en page"
+                },
+                {
+                    label:"Langue",
+                    buttons:[
+                        {
+                            label:"Français"
+                        },
+                        {
+                            label:"Anglais"
+                        },
+                        {
+                            label:"Espagnol"
+                        },
+                        {
+                            label:"Italien"
+                        },
+                        {
+                            label:"Portuguais"
+                        },
+                        {
+                            label:"Allemand"
+                        },
+                        {
+                            label:"Russe"
+                        },
+                        {
+                            label:"Arabe"
+                        }
+                    ]
+                },
+                {
+                    label:"Borne"
+                },
+                {
+                    label:"Type de Vente"
+                },
+                {
+                    label:"Tout Voir"
+                },
+                {
+                    label:"Aides Visuelle"
+                }
+            ]
         },
         {
-            label:"✉<br>Button 3",
-            value:"letter"
+            label:"Outils",
+            buttons:[
+                {
+                    label:"Copier"
+                },
+                {
+                    label:"Coller"
+                },
+                {
+                    label:"Supprimer"
+                },
+                {
+                    label:"Corbeille"
+                }
+            ]
         },
         {
-            label:"✿<br>Button 4",
-            value:"flower"
-        },
-        {
-            label:"❤<br>Button 5",
-            value:"<3"
-        },
-        {
-            label:"★<br>Button 6",
-            value:10
-        },
-        {
-            label:"☢<br>Button 7"
-        },
-        {
-            label:"☯<br>Button 8"
+            label:"Ajouter",
+            buttons:[
+                {
+                    label:"Catégorie"
+                },
+                {
+                    label:"Produit"
+                },
+                {
+
+                }
+            ]
         }
     ],
     onSelect:function(index, value) { alert(`Bouton ${value}(${index}) sélectionné`) }
