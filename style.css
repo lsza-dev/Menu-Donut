@@ -30,7 +30,7 @@
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    width: 27%;
+    width: 42%;
     aspect-ratio: 1;
     z-index: 1;
     border-radius: 50%;
@@ -55,12 +55,12 @@
 .radial-menu li > div{
     background: radial-gradient(
         transparent 0%,
-        transparent calc(20% - 5px),
-        rgba(0,0,0,0.1) 20%,
-        white 20%,
-        white 70%,
+        transparent calc(30% - 5px),
+        rgba(0,0,0,0.1) 30%,
+        white 30%,
+        white calc(70% - 2px),
         rgba(0,0,0,0.1) calc(70% - 2px),
-        transparent
+        transparent 70%
     );
     color:grey;
     display:block;
@@ -83,12 +83,12 @@
 .radial-menu li > div[radial-menu-disabled]{
     background: radial-gradient(
         transparent 0%,
-        transparent calc(20% - 5px),
-        rgba(0,0,0,0.1) 20%,
-        lightgray 20%,
-        lightgrey 70%,
+        transparent calc(30% - 5px),
+        rgba(0,0,0,0.1) 30%,
+        lightgrey 30%,
+        lightgrey calc(70% - 2px),
         rgba(0,0,0,0.1) calc(70% - 2px),
-        transparent
+        transparent 70%
     );
     filter: grayscale(1);
 }
@@ -97,12 +97,12 @@
 {
     background: radial-gradient(
         transparent 0%,
-        transparent calc(20% - 5px),
-        rgba(0,0,0,0.1) 20%,
-        whitesmoke 20%,
-        whitesmoke 70%,
+        transparent calc(30% - 5px),
+        rgba(0,0,0,0.1) 30%,
+        whitesmoke 30%,
+        whitesmoke calc(70% - 2px),
         rgba(0,0,0,0.1) calc(70% - 2px),
-        transparent
+        transparent 70%
     );
     cursor:pointer;
     /*width: 105%;*/
