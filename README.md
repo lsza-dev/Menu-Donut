@@ -1,15 +1,18 @@
+![logo](./logo.PNG)
 # Radial Menu
 
 Radial Menu is a wrapper for making easelly radial menu. This menu will be opened by a right mouse click or a long touch on screen.
 
 To select an item, release the right button or the finger on the button to select it.
-
 ![Capture](./Capture.PNG)
 
-[JSFiddle Sample](https://jsfiddle.net/L80pg3rd/1/)
+[JSFiddle Sample](https://jsfiddle.net/1z4fwedo/)
 
 ```js
 const config = {
+    parent:document.body,
+    width:"384px",
+    fontSize:"16px",
     buttons: [
         {
             label:"😀<br>button 1",
@@ -37,7 +40,9 @@ const config = {
             label:"😆<br>button 8"
         }
     ],
-    onSelect:function(index) { console.log(`Button ${index} selected`) }
+    onSelect:function(index, value) { 
+        alert(`You've selected ${value}(${index}) !`) 
+    }
 };
 
 const radial = new RadialMenu(config);
@@ -51,4 +56,3 @@ const radial = new RadialMenu(config);
 - [x] Limit the minimal buttons due to the CSS limitation (no maximal, you know what you do !)
 - [x] Make possible to add/update/remove buttons on the way
 - [x] Create submenu
-- [ ] Animate the menu at open

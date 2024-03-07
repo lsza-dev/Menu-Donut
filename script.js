@@ -131,6 +131,8 @@ const config = {
             ]
         }
     ],
-    onSelect:function(index, value) { alert(`Bouton ${value}(${index}) sélectionné`) }
+    onSelect:function(index, value) { 
+        alert(`You've selected ${value}(${index}) !`) 
+    }
 };
 const radial = new RadialMenu(config);
