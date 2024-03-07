@@ -14,7 +14,7 @@ class RadialMenu {
         try {
             //Set config and initialize radial menu
             this.config = config;
-            this.#menus = new Radial(this.config.buttons, this);
+            this.#menus = new Radial(this.config, this);
             this.#currentMenu = this.#menus;
             this.#radialMenu = this.#currentMenu.radial;
             //Define prop to detect when the menu is open or close
@@ -81,7 +81,6 @@ class RadialMenu {
             }, { passive: false }));
             //Add mouse events
             ["mousedown","touchstart", "touchend"].forEach(eventType => parent.addEventListener(eventType, (e) => {
-                if(this.isOpen) this.onClose();
                 switch(e.type) {
                     case 'mousedown':
                         if(e.button === 2) this.onOpen(e);
@@ -151,7 +150,8 @@ class RadialMenu {
         const index = Array.from(section.parentElement.children).indexOf(section);
         const buttonFromConfig = this.#currentMenu.buttons[index];
         if(buttonFromConfig.menu) return;
-        this.config.onSelect(index, buttonFromConfig.value || buttonFromConfig.label);
+        const value = buttonFromConfig.value || this.#currentMenu.value || buttonFromConfig.label;
+        this.config.onSelect(index, value);
     }
 
     get menus() {
@@ -167,15 +167,17 @@ class Radial {
     #buttons = [];
     #radialMenu;
     #instance;
-    constructor(buttons, instance) {
-        this.#buttons = buttons.map((el, index) => {
+    #value;
+    constructor(config, instance) {
+        this.#instance = instance;
+        if(config.value) this.#value = config.value;
+        this.#buttons = config.buttons.map((el, index) => {
             let button = new RadialButton(el, index, this);
             //Check if button is submenu
             if(el.buttons && el.buttons.length > 0)
-                button.menu = new Radial(el.buttons, this.#instance);
+                button.menu = new Radial(el, this.#instance);
             return button;
         });
-        this.#instance = instance;
     }
 
     /**
@@ -211,6 +213,7 @@ class Radial {
                 if(section.hidden)
                     li.classList.add("radial-menu-hidden");
                 button.innerHTML = `<div>${section.label}</div>`;
+                if(section.color) button.style.color = section.color;
                 li.append(button);
                 radialMenu.append(li);
             }
@@ -249,6 +252,12 @@ class Radial {
         this.#radialMenu = this.generateRadialMenu();
         return this.#radialMenu;
     }
+    get value() {
+        return this.#value;
+    }
+    set value(newValue) {
+        this.#value = newValue;
+    }
 }
 
 class RadialButton {
@@ -257,6 +266,8 @@ class RadialButton {
     #hidden = false;
     #buttons = null;
     #value = null;
+    #color = null;
+    #background = null;
     #instance;
     /**
      * 
@@ -268,6 +279,8 @@ class RadialButton {
         this.#disabled = config.disabled || false;
         this.#hidden = config.hidden || false;
         this.#value = config.value || null;
+        this.#color = config.color || null;
+        this.#background = config.background || null;
         this.index = index;
         if(config.buttons) this.#buttons = config.buttons.map((el, index) => new RadialButton(el, index, instance));
         this.#instance = instance;
@@ -326,4 +339,25 @@ class RadialButton {
         this.#buttons = buttons.map(el => new RadialButton(el, this.instance));
     }
 
+    get color() {
+        return this.#color;
+    }
+        /**
+     * @param {string} color
+     */
+    set color(color) {
+        this.#color = color;
+        this.#instance.generateRadialMenu();
+    }
+
+    get background() {
+        return this.#background;
+    }
+        /**
+     * @param {string} color
+     */
+    set background(color) {
+        this.#background = color;
+        this.#instance.generateRadialMenu();
+    }
 }
