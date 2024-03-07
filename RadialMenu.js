@@ -108,6 +108,7 @@ class RadialMenu {
             //Handle stop navigate
             ["mouseup", "click"].forEach(eventType => this.radialContainer.addEventListener(eventType, (e) => {
                 const button = e.target.closest(".radial-menu-button");
+                if(Array.from(e.target.classList).includes("radial-menu")) return;
                 if(button && !button.getAttribute("radial-menu-disabled"))
                     this.onSelectedButton(button);
                 this.onClose();
@@ -267,7 +268,7 @@ class RadialButton {
         this.#hidden = config.hidden || false;
         this.#value = config.value || null;
         this.index = index;
-        if(config.buttons) this.#buttons = config.buttons.map(el => new RadialButton(el, instance));
+        if(config.buttons) this.#buttons = config.buttons.map((el, index) => new RadialButton(el, index, instance));
         this.#instance = instance;
     }
 
