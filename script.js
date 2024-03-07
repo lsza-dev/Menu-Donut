@@ -4,102 +4,129 @@ const config = {
     fontSize:"16px",
     buttons: [
         {
-            label:"Gestionnaires",
+            label:"Musics",
             buttons:[
                 {
-                    label:"Ingrédients",
+                    label:"Music 01",
                 },
                 {
-                    label:"Commentaires",
+                    label:"Music 02",
                 },
                 {
-                    label:"Allergènes",
+                    label:"Music 03",
                 },
                 {
-                    label:"Ressources",
+                    label:"Music 04",
                 },
                 {
-                    label:"Imprimantes",
+                    label:"Music 05",
                 },
                 {
-                    label:"Tableur"
+                    label:"Music 06"
                 }
             ]
         },
         {
-            label:"Paramètres",
+            label:"Albums",
             buttons:[
                 {
-                    label:"Mise en page"
+                    label:"All"
                 },
                 {
-                    label:"Langue",
+                    label:"Album 01",
                     buttons:[
                         {
-                            label:"Français"
+                            label:"Music 01"
                         },
                         {
-                            label:"Anglais"
+                            label:"Music 02"
                         },
                         {
-                            label:"Espagnol"
+                            label:"Music 03"
                         },
                         {
-                            label:"Italien"
+                            label:"Music 04"
                         },
                         {
-                            label:"Portuguais"
+                            label:"Music 05"
                         },
                         {
-                            label:"Allemand"
+                            label:"Music 06"
                         },
                         {
-                            label:"Russe"
+                            label:"Music 07"
                         },
                         {
-                            label:"Arabe"
+                            label:"Music 08"
                         }
                     ]
                 },
                 {
-                    label:"Borne"
+                    label:"Album 02",
+                    value:"test",
+                    buttons:[
+                        {
+                            label:"Peripheral 01"
+                        },
+                        {
+                            label:"Peripheral 02"
+                        },
+                        {
+                            label:"Peripheral 03"
+                        }
+                    ]
                 },
                 {
-                    label:"Type de Vente"
-                },
-                {
-                    label:"Tout Voir"
-                },
-                {
-                    label:"Aides Visuelle"
+                    label:"Album 03",
+                    buttons:[
+                        {
+                            label:"COLOR 01",
+                            color:"#FF0000"
+                        },
+                        {
+                            label:"COLOR 02",
+                            color:"#00FF00"
+                        },
+                        {
+                            label:"COLOR 03",
+                            color:"#0000FF"
+                        }
+                    ]
                 }
             ]
         },
         {
-            label:"Outils",
+            label:"Half",
             buttons:[
                 {
-                    label:"Copier"
+                    label:"One"
                 },
                 {
-                    label:"Coller"
+                    label:"Two",
+                    disabled:false
                 },
                 {
-                    label:"Supprimer"
+                    label:"Three",
+                    disabled:true
                 },
                 {
-                    label:"Corbeille"
-                }
-            ]
-        },
-        {
-            label:"Ajouter",
-            buttons:[
-                {
-                    label:"Catégorie"
+                    label:"Four"
                 },
                 {
-                    label:"Produit"
+                    label:"",
+                    hidden:true
+                },
+                {
+                    label:"",
+                    hidden:true
+                },
+                {
+                    label:"",
+                    hidden:true
+                },
+                {
+                    label:"",
+                    hidden:true
                 }
             ]
         }
