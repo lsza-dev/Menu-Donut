@@ -81,6 +81,7 @@ class RadialMenu {
             }, { passive: false }));
             //Add mouse events
             ["mousedown","touchstart", "touchend"].forEach(eventType => parent.addEventListener(eventType, (e) => {
+                if(this.isOpen) this.onClose();
                 switch(e.type) {
                     case 'mousedown':
                         if(e.button === 2) this.onOpen(e);
@@ -107,8 +108,8 @@ class RadialMenu {
             }));
             //Handle stop navigate
             ["mouseup", "click"].forEach(eventType => this.radialContainer.addEventListener(eventType, (e) => {
-                const button = e.target.closest(".radial-menu-button");
                 if(Array.from(e.target.classList).includes("radial-menu")) return;
+                const button = e.target.closest(".radial-menu-button");
                 if(button && !button.getAttribute("radial-menu-disabled"))
                     this.onSelectedButton(button);
                 this.onClose();
