@@ -37,7 +37,7 @@ const config = {
             label:"😆<br>button 8"
         }
     ],
-    onSelect:function(index) { console.log(`Button ${index} selected`)}
+    onSelect:function(index) { console.log(`Button ${index} selected`) }
 };
 
 const radial = new RadialMenu(config);
@@ -50,5 +50,5 @@ const radial = new RadialMenu(config);
 - [x] Make touch screen compatible
 - [x] Limit the minimal buttons due to the CSS limitation (no maximal, you know what you do !)
 - [x] Make possible to add/remove button on the way
-- [ ] Create submenu
+- [x] Create submenu
 - [ ] Animate the menu at open
