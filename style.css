@@ -36,7 +36,7 @@
     border-radius: 50%;
     background: url(./logo.png);
     background-position: center;
-    background-size: 75%;
+    background-size: contain;
     background-repeat: no-repeat;
 }
 .radial-menu li{
@@ -56,10 +56,10 @@
     background: radial-gradient(
         transparent 0%,
         transparent calc(30% - 5px),
-        rgba(0,0,0,0.1) 30%,
+        rgba(0,0,0,0.1) calc(30% - 1px),
         white 30%,
         white calc(70% - 2px),
-        rgba(0,0,0,0.1) calc(70% - 2px),
+        rgba(0,0,0,0.1) calc(70% - 1px),
         transparent 70%
     );
     color:grey;
@@ -84,10 +84,10 @@
     background: radial-gradient(
         transparent 0%,
         transparent calc(30% - 5px),
-        rgba(0,0,0,0.1) 30%,
+        rgba(0,0,0,0.1) calc(30% - 1px),
         lightgrey 30%,
         lightgrey calc(70% - 2px),
-        rgba(0,0,0,0.1) calc(70% - 2px),
+        rgba(0,0,0,0.1) calc(70% - 1px),
         transparent 70%
     );
     filter: grayscale(1);
@@ -98,10 +98,10 @@
     background: radial-gradient(
         transparent 0%,
         transparent calc(30% - 5px),
-        rgba(0,0,0,0.1) 30%,
+        rgba(0,0,0,0.1) calc(30% - 1px),
         whitesmoke 30%,
         whitesmoke calc(70% - 2px),
-        rgba(0,0,0,0.1) calc(70% - 2px),
+        rgba(0,0,0,0.1) calc(70% - 1px),
         transparent 70%
     );
     cursor:pointer;

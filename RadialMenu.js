@@ -14,6 +14,7 @@ class RadialMenu {
         try {
             //Set config and initialize radial menu
             this.config = config;
+            if(!this.config.parent) this.config.parent = document.body;
             this.#menus = new Radial(this.config, this);
             this.#currentMenu = this.#menus;
             this.#radialMenu = this.#currentMenu.radial;
@@ -151,7 +152,7 @@ class RadialMenu {
         const buttonFromConfig = this.#currentMenu.buttons[index];
         if(buttonFromConfig.menu) return;
         const value = buttonFromConfig.value || this.#currentMenu.value || buttonFromConfig.label;
-        this.config.onSelect(index, value);
+        if(this.config.onSelect) this.config.onSelect(index, value);
     }
 
     get menus() {
@@ -196,12 +197,13 @@ class Radial {
                 radialMenu.innerHTML = ""; //Empty the radial menu for regenerating
             }
             if(radialButtons.length < 3) {
-                radialButtons.push(
-                    new RadialButton({
-                        label:"",
-                        disabled:true
-                    }, this)
-                )
+                while(radialButtons.length != 3)
+                    radialButtons.push(
+                        new RadialButton({
+                            label:"",
+                            disabled:true
+                        }, this)
+                    );
             }
             //Generate buttons list
             for(let section of radialButtons) {
@@ -267,7 +269,6 @@ class RadialButton {
     #buttons = null;
     #value = null;
     #color = null;
-    #background = null;
     #instance;
     /**
      * 
@@ -280,7 +281,6 @@ class RadialButton {
         this.#hidden = config.hidden || false;
         this.#value = config.value || null;
         this.#color = config.color || null;
-        this.#background = config.background || null;
         this.index = index;
         if(config.buttons) this.#buttons = config.buttons.map((el, index) => new RadialButton(el, index, instance));
         this.#instance = instance;
@@ -347,17 +347,6 @@ class RadialButton {
      */
     set color(color) {
         this.#color = color;
-        this.#instance.generateRadialMenu();
-    }
-
-    get background() {
-        return this.#background;
-    }
-        /**
-     * @param {string} color
-     */
-    set background(color) {
-        this.#background = color;
         this.#instance.generateRadialMenu();
     }
 }
