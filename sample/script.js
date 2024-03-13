@@ -2,7 +2,11 @@ const config = {
     parent:document.body,
     width:"384px",
     fontSize:"16px",
+    label:"Parent Menu",
     buttons: [
+        {
+            label:"Simple Button"
+        },
         {
             label:"Musics",
             buttons:[
@@ -131,8 +135,20 @@ const config = {
             ]
         }
     ],
-    onSelect:function(index, value) { 
-        alert(`You've selected ${value}(${index}) !`) 
+    beforeOpen:function(menu) {
+        console.log("before open!", menu);
+    },
+    onOpen:function(menu) {
+        console.log("open!", menu);
+    },
+    beforeOpenSubMenu:function(subMenu) {
+        console.log("before open submenu!", subMenu);
+    },
+    onOpenSubMenu:function(subMenu) {
+        console.log("open submenu!", subMenu);
+    },
+    onSelect:function(index, value, menu) {
+        alert(`You've selected "${value}"\nat index "${index}"\nfrom "${menu.value || menu.label}"`);
     }
 };
 const radial = new RadialMenu(config);
