@@ -5,6 +5,7 @@ class RadialMenu {
     #radialMenu;
     #cursorPosX; //For the position X of cursor or touch
     #cursorPosY; //For the position Y of cursor or touch
+    #isOpen; //For checking the status of the menu
     /**
      * Create a new radial menu
      * @param {object} config An object represent the configuration
@@ -19,7 +20,7 @@ class RadialMenu {
             this.#currentMenu = this.#menus;
             this.#radialMenu = this.#currentMenu.radial;
             //Define prop to detect when the menu is open or close
-            this.isOpen = false;
+            this.#isOpen = false;
 
             //Generate container
             this.radialContainer = document.createElement("div");
@@ -34,6 +35,9 @@ class RadialMenu {
         }
     }
 
+    /**
+     * Initialize envents relative to menu
+     */
     events() {
         try {
             let parent, //The container
@@ -48,7 +52,7 @@ class RadialMenu {
             parent.addEventListener("contextmenu", (e) => e.preventDefault());
             //Handle move and hover
             ["mousemove","touchmove"].forEach(eventType => parent.addEventListener(eventType, (e) => {
-                if(this.isOpen) e.preventDefault();
+                if(this.#isOpen) e.preventDefault();
                 switch(e.type) {
                     case "touchmove":
                         this.#cursorPosX = e.targetTouches[0].pageX;
@@ -74,7 +78,7 @@ class RadialMenu {
                     const section = buttonHovered.closest("li");
                     const index = Array.from(this.#radialMenu.children).indexOf(section);
                     const buttonConfig = this.#currentMenu.buttons[index];
-                    if(buttonConfig.buttons && buttonConfig.buttons.length) {
+                    if(buttonConfig && buttonConfig.buttons && buttonConfig.buttons.length) {
                         this.onOpenSubMenu(buttonConfig, this.#cursorPosX, this.#cursorPosY);
                         buttonHovered = null;
                     }
@@ -84,7 +88,7 @@ class RadialMenu {
             ["mousedown","touchstart", "touchend"].forEach(eventType => parent.addEventListener(eventType, (e) => {
                 switch(e.type) {
                     case 'mousedown':
-                        if(e.button === 2) this.onOpen(e);
+                        if(e.button === 2) this.onOpen();
                     break;
                     case 'touchstart':
                         const posX = e.targetTouches[0].pageX - 50;
@@ -95,7 +99,7 @@ class RadialMenu {
                             if(
                                 posX < this.#cursorPosX &&
                                 posY < this.#cursorPosY
-                            ) this.onOpen(e);
+                            ) this.onOpen();
                         }, 300);
                     break;
                     case 'touchend':
@@ -120,27 +124,47 @@ class RadialMenu {
         }
     }
 
-    onOpen() {
-        this.isOpen = true;
+    /**
+     * Open the currentMenu
+     * @param {boolean} [isSub=false] Define if the menu to open is sub or not
+     */
+    onOpen(isSub = false) {
+        //Trigger the functions before openning menu
+        if(this.config.beforeOpen && !isSub) this.config.beforeOpen(this);
+        //Open menu
+        this.#isOpen = true;
         this.radialContainer.style.display = "block";
         this.radialContainer.appendChild(this.#radialMenu);
         this.#radialMenu.style.left = this.#cursorPosX + "px";
         this.#radialMenu.style.top = this.#cursorPosY + "px";
         //Timeout to show the fade animation
         setTimeout(() => this.#radialMenu.style.opacity = "1", 20);
+        //Trigger the functions for openning menu
+        if(this.config.onOpen && !isSub) this.config.onOpen(this);
     }
+    /**
+     * Close the menu
+     */
     onClose() {
-        this.isOpen = false;
+        this.#isOpen = false;
         this.radialContainer.style.display = "";
         this.#radialMenu.remove();
         this.#currentMenu = this.#menus;
         this.#radialMenu = this.#currentMenu.radial;
     }
+    /**
+     * Open a subMenu
+     * @param {RadialButton} buttonConfig The relative radial button
+     */
     onOpenSubMenu(buttonConfig) {
+        //Trigger the beforeOpenSubMenu
+        if(this.config.beforeOpenSubMenu) this.config.beforeOpenSubMenu(this.#currentMenu);
         this.onClose();
         this.#currentMenu = buttonConfig.menu;
         this.#radialMenu = this.#currentMenu.radial;
-        this.onOpen();
+        this.onOpen(true);
+        //Trigger the onOpenSubMenu
+        if(this.config.onOpenSubMenu) this.config.onOpenSubMenu(this.#currentMenu);
     }
     /**
      * Event when user has realese mouse or touch to a button
@@ -152,7 +176,7 @@ class RadialMenu {
         const buttonFromConfig = this.#currentMenu.buttons[index];
         if(buttonFromConfig.menu) return;
         const value = buttonFromConfig.value || this.#currentMenu.value || buttonFromConfig.label;
-        if(this.config.onSelect) this.config.onSelect(index, value);
+        if(this.config.onSelect) this.config.onSelect(index, value, this.#currentMenu);
     }
 
     get menus() {
@@ -169,9 +193,11 @@ class Radial {
     #radialMenu;
     #instance;
     #value;
+    #label;
     constructor(config, instance) {
         this.#instance = instance;
-        if(config.value) this.#value = config.value;
+        this.#value = config.value;
+        this.#label = config.label;
         this.#buttons = config.buttons.map((el, index) => {
             let button = new RadialButton(el, index, this);
             //Check if button is submenu
@@ -259,6 +285,12 @@ class Radial {
     }
     set value(newValue) {
         this.#value = newValue;
+    }
+    get label() {
+        return this.#label;
+    }
+    set label(newLabel) {
+        this.#label = newLabel;
     }
 }
 
